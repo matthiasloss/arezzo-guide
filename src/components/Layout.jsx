@@ -11,35 +11,42 @@ const navItems = [
 
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-purple-50 flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: 'var(--tuscan-cream)' }}>
       {/* Main Content */}
-      <main className="flex-1 pb-20">
+      <main className="flex-1 pb-24">
         <Outlet />
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-bottom z-50">
-        <div className="flex justify-around items-center h-16">
+      <nav className="fixed bottom-0 left-0 right-0 glass safe-area-bottom z-50">
+        <div className="flex justify-around items-center h-18 max-w-lg mx-auto">
           {navItems.map(({ to, icon: Icon, label }) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive }) =>
-                `flex flex-col items-center justify-center flex-1 h-full transition-colors ${
+                `flex flex-col items-center justify-center flex-1 py-3 transition-all duration-300 ${
                   isActive
-                    ? 'text-purple-600'
-                    : 'text-gray-500 hover:text-purple-500'
+                    ? 'text-[#c75b39]'
+                    : 'text-[#4a3728]/50 hover:text-[#4a3728]/80'
                 }`
               }
             >
               {({ isActive }) => (
                 <>
-                  <Icon
-                    size={22}
-                    strokeWidth={isActive ? 2.5 : 2}
-                    className={isActive ? 'text-purple-600' : ''}
-                  />
-                  <span className={`text-xs mt-1 ${isActive ? 'font-semibold' : ''}`}>
+                  <div className={`p-2 rounded-xl transition-all duration-300 ${
+                    isActive
+                      ? 'bg-[#c75b39]/10 scale-110'
+                      : ''
+                  }`}>
+                    <Icon
+                      size={22}
+                      strokeWidth={isActive ? 2.5 : 2}
+                    />
+                  </div>
+                  <span className={`text-xs mt-1 transition-all duration-300 ${
+                    isActive ? 'font-semibold' : 'font-medium'
+                  }`}>
                     {label}
                   </span>
                 </>

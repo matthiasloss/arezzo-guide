@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Route, Wine, TreePine, Landmark, Info, ChevronRight, Sun, Phone } from 'lucide-react'
+import { MapPin, Route, Landmark, Info, ChevronRight, Sun, Phone, Grape } from 'lucide-react'
 import { places } from '../data/places'
 import { tours } from '../data/tours'
 
 const quickLinks = [
-  { to: '/orte', icon: MapPin, label: 'Sehenswürdigkeiten', color: 'bg-amber-500' },
-  { to: '/touren', icon: Route, label: 'Touren planen', color: 'bg-green-500' },
-  { to: '/karte', icon: Landmark, label: 'Karte öffnen', color: 'bg-blue-500' },
-  { to: '/info', icon: Info, label: 'Praktische Infos', color: 'bg-purple-500' },
+  { to: '/orte', icon: MapPin, label: 'Sehenswürdigkeiten', gradient: 'from-amber-500 to-orange-500' },
+  { to: '/touren', icon: Route, label: 'Touren planen', gradient: 'from-emerald-500 to-green-600' },
+  { to: '/karte', icon: Landmark, label: 'Karte öffnen', gradient: 'from-blue-500 to-indigo-500' },
+  { to: '/info', icon: Info, label: 'Praktische Infos', gradient: 'from-violet-500 to-purple-600' },
 ]
 
 export default function Home() {
@@ -17,34 +17,38 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-purple-700 via-purple-600 to-amber-500 text-white">
-        <div className="px-4 pt-8 pb-12">
-          <div className="flex items-center gap-2 mb-2">
-            <Sun className="text-amber-300" size={24} />
-            <span className="text-purple-200 text-sm">Willkommen in der Toskana</span>
+      <div className="gradient-tuscan text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+        <div className="relative px-5 pt-10 pb-16 safe-area-top">
+          <div className="flex items-center gap-2 mb-3">
+            <Sun className="text-amber-200" size={22} />
+            <span className="text-white/80 text-sm font-medium">Willkommen in der Toskana</span>
           </div>
-          <h1 className="text-3xl font-bold mb-2">
+          <h1 className="text-4xl font-bold mb-2 tracking-tight">
             Arezzo Guide
           </h1>
-          <p className="text-purple-100 text-lg">
+          <p className="text-white/90 text-lg font-light">
             Dein Reisebegleiter für die Region Arezzo & Fattoria Lavialla
           </p>
         </div>
       </div>
 
       {/* Quick Links */}
-      <div className="px-4 -mt-6">
+      <div className="px-5 -mt-8 relative z-10">
         <div className="grid grid-cols-2 gap-3">
-          {quickLinks.map(({ to, icon: Icon, label, color }) => (
+          {quickLinks.map(({ to, icon: Icon, label, gradient }) => (
             <Link
               key={to}
               to={to}
-              className="bg-white rounded-xl p-4 shadow-lg flex items-center gap-3 active:scale-95 transition-transform"
+              className="bg-white rounded-2xl p-4 shadow-tuscan card-hover flex items-center gap-3"
             >
-              <div className={`${color} p-2 rounded-lg`}>
+              <div className={`bg-gradient-to-br ${gradient} p-2.5 rounded-xl shadow-lg`}>
                 <Icon size={20} className="text-white" />
               </div>
-              <span className="font-medium text-gray-800">{label}</span>
+              <span className="font-semibold text-[#4a3728] text-sm">{label}</span>
             </Link>
           ))}
         </div>
@@ -52,43 +56,46 @@ export default function Home() {
 
       {/* Fattoria Lavialla Section */}
       {fattoria && (
-        <section className="px-4 mt-8">
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-purple-600 to-purple-500 p-4">
-              <div className="flex items-center justify-between">
+        <section className="px-5 mt-8">
+          <div className="bg-white rounded-3xl shadow-tuscan-lg overflow-hidden card-hover">
+            <div className="gradient-wine p-5 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+              <div className="flex items-center justify-between relative">
                 <div>
-                  <p className="text-purple-200 text-sm">Deine Unterkunft</p>
-                  <h2 className="text-xl font-bold text-white">{fattoria.name}</h2>
+                  <p className="text-white/70 text-sm font-medium">Deine Unterkunft</p>
+                  <h2 className="text-2xl font-bold text-white mt-1">{fattoria.name}</h2>
                 </div>
-                <span className="text-3xl">🏡</span>
+                <div className="bg-white/20 p-3 rounded-2xl">
+                  <Grape size={28} className="text-white" />
+                </div>
               </div>
             </div>
-            <div className="p-4">
-              <p className="text-gray-600 mb-4">{fattoria.description}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">
+            <div className="p-5">
+              <p className="text-[#4a3728]/70 mb-4 leading-relaxed">{fattoria.description}</p>
+              <div className="flex flex-wrap gap-2 mb-5">
+                <span className="tag tag-terracotta">
                   Bio-Bauernhof
                 </span>
-                <span className="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm">
+                <span className="tag tag-gold">
                   Weingut
                 </span>
-                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                <span className="tag tag-olive">
                   Restaurant
                 </span>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 <Link
                   to={`/orte/${fattoria.id}`}
-                  className="flex-1 bg-purple-600 text-white py-2 px-4 rounded-lg text-center font-medium"
+                  className="flex-1 gradient-tuscan text-white py-3 px-5 rounded-xl text-center font-semibold shadow-lg btn-press"
                 >
                   Details ansehen
                 </Link>
                 {fattoria.phone && (
                   <a
                     href={`tel:${fattoria.phone}`}
-                    className="bg-gray-100 p-2 rounded-lg"
+                    className="bg-[#4a3728]/5 p-3 rounded-xl btn-press"
                   >
-                    <Phone size={20} className="text-gray-600" />
+                    <Phone size={22} className="text-[#4a3728]" />
                   </a>
                 )}
               </div>
@@ -98,34 +105,35 @@ export default function Home() {
       )}
 
       {/* Featured Tours */}
-      <section className="px-4 mt-8">
+      <section className="px-5 mt-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-800">Beliebte Touren</h2>
-          <Link to="/touren" className="text-purple-600 text-sm font-medium flex items-center">
+          <h2 className="text-xl font-bold text-[#4a3728]">Beliebte Touren</h2>
+          <Link to="/touren" className="text-[#c75b39] text-sm font-semibold flex items-center gap-1">
             Alle <ChevronRight size={16} />
           </Link>
         </div>
         <div className="space-y-3">
-          {featuredTours.map((tour) => (
+          {featuredTours.map((tour, index) => (
             <Link
               key={tour.id}
               to={`/touren/${tour.id}`}
-              className="block bg-white rounded-xl p-4 shadow-md active:scale-98 transition-transform"
+              className="block bg-white rounded-2xl p-4 shadow-tuscan card-hover"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="flex items-start gap-3">
-                <div className="bg-green-100 p-2 rounded-lg">
-                  <Route size={24} className="text-green-600" />
+              <div className="flex items-start gap-4">
+                <div className="gradient-olive p-3 rounded-xl shadow-md">
+                  <Route size={22} className="text-white" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-gray-800">{tour.name}</h3>
-                  <p className="text-sm text-gray-500">{tour.subtitle}</p>
-                  <div className="flex gap-3 mt-2 text-xs text-gray-400">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-[#4a3728]">{tour.name}</h3>
+                  <p className="text-sm text-[#4a3728]/60 mt-0.5">{tour.subtitle}</p>
+                  <div className="flex gap-3 mt-2 text-xs text-[#4a3728]/40 font-medium">
                     <span>{tour.duration}</span>
                     <span>•</span>
                     <span>{tour.difficulty}</span>
                   </div>
                 </div>
-                <ChevronRight className="text-gray-300 mt-2" size={20} />
+                <ChevronRight className="text-[#4a3728]/20 mt-1" size={20} />
               </div>
             </Link>
           ))}
@@ -133,40 +141,32 @@ export default function Home() {
       </section>
 
       {/* Highlights Section */}
-      <section className="px-4 mt-8 mb-8">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Highlights der Region</h2>
+      <section className="px-5 mt-8 mb-6">
+        <h2 className="text-xl font-bold text-[#4a3728] mb-4">Highlights der Region</h2>
         <div className="grid grid-cols-3 gap-3">
-          <div className="bg-white rounded-xl p-3 shadow text-center">
-            <span className="text-2xl">🏛️</span>
-            <p className="text-xs text-gray-600 mt-1">Arezzo Altstadt</p>
-          </div>
-          <div className="bg-white rounded-xl p-3 shadow text-center">
-            <span className="text-2xl">🍷</span>
-            <p className="text-xs text-gray-600 mt-1">Chianti Weine</p>
-          </div>
-          <div className="bg-white rounded-xl p-3 shadow text-center">
-            <span className="text-2xl">🏔️</span>
-            <p className="text-xs text-gray-600 mt-1">Cortona</p>
-          </div>
-          <div className="bg-white rounded-xl p-3 shadow text-center">
-            <span className="text-2xl">🎨</span>
-            <p className="text-xs text-gray-600 mt-1">Piero Fresken</p>
-          </div>
-          <div className="bg-white rounded-xl p-3 shadow text-center">
-            <span className="text-2xl">🌳</span>
-            <p className="text-xs text-gray-600 mt-1">Casentino</p>
-          </div>
-          <div className="bg-white rounded-xl p-3 shadow text-center">
-            <span className="text-2xl">🧀</span>
-            <p className="text-xs text-gray-600 mt-1">Pecorino</p>
-          </div>
+          {[
+            { emoji: '🏛️', label: 'Arezzo Altstadt' },
+            { emoji: '🍷', label: 'Chianti Weine' },
+            { emoji: '🏔️', label: 'Cortona' },
+            { emoji: '🎨', label: 'Piero Fresken' },
+            { emoji: '🌳', label: 'Casentino' },
+            { emoji: '🧀', label: 'Pecorino' },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-2xl p-4 shadow-tuscan text-center card-hover"
+            >
+              <span className="text-3xl">{item.emoji}</span>
+              <p className="text-xs text-[#4a3728]/70 mt-2 font-medium">{item.label}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Offline Notice */}
-      <div className="px-4 mb-8">
-        <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-          <p className="text-green-800 text-sm">
+      <div className="px-5 mb-8">
+        <div className="bg-[#5a7247]/10 border border-[#5a7247]/20 rounded-2xl p-4">
+          <p className="text-[#5a7247] text-sm">
             <strong>Offline verfügbar:</strong> Diese App funktioniert auch ohne Internet.
             Karten werden beim ersten Laden gespeichert.
           </p>
