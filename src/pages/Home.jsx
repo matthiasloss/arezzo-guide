@@ -106,35 +106,24 @@ export default function Home() {
 
       {/* Webcam Section */}
       {fattoria?.webcam && (
-        <section className="px-5 mt-8">
+        <section className="px-5 mt-6">
           <a
             href={fattoria.webcam}
             target="_blank"
             rel="noopener noreferrer"
-            className="block bg-white rounded-2xl shadow-tuscan overflow-hidden card-hover"
+            className="flex items-center gap-4 bg-white rounded-2xl p-4 shadow-tuscan card-hover"
           >
-            <div className="relative">
-              <div className="bg-gradient-to-br from-[#4a3728] to-[#2d2118] aspect-video flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Video size={32} className="text-white" />
-                  </div>
-                  <p className="text-white/90 font-medium">Live Webcam</p>
-                  <p className="text-white/60 text-sm mt-1">Piazzetta & Hofladen</p>
-                </div>
+            <div className="relative flex-shrink-0">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#4a3728] to-[#2d2118] rounded-xl flex items-center justify-center">
+                <Video size={24} className="text-white" />
               </div>
-              <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
-                <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                LIVE
-              </div>
+              <div className="absolute -top-1 -right-1 bg-red-500 w-3 h-3 rounded-full border-2 border-white animate-pulse"></div>
             </div>
-            <div className="p-4 flex items-center justify-between">
-              <div>
-                <h3 className="font-semibold text-[#4a3728]">Fattoria La Vialla Webcam</h3>
-                <p className="text-sm text-[#4a3728]/60">Blick auf die Piazzetta</p>
-              </div>
-              <ExternalLink size={20} className="text-[#c75b39]" />
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-[#4a3728]">Live Webcam</h3>
+              <p className="text-sm text-[#4a3728]/60">Piazzetta & Hofladen</p>
             </div>
+            <ExternalLink size={18} className="text-[#c75b39] flex-shrink-0" />
           </a>
         </section>
       )}
