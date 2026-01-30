@@ -30,8 +30,9 @@ export const places = [
 - Email: info@fattorialavialla.it`,
     coordinates: [43.4567, 11.7890], // Beispiel-Koordinaten
     address: 'Località Lavialla, 52020 Castiglion Fibocchi AR',
-    website: 'https://www.fattorialavialla.it',
-    phone: '+39 055 123 4567',
+    website: 'https://www.lavialla.com',
+    webcam: 'https://www.lavialla.com/en-US/at-the-fattoria/webcam/',
+    phone: '+39 055 9177 1',
     tips: [
       'Frühstück auf der Terrasse mit Blick auf die Hügel',
       'Weinverkostung am Abend buchen',

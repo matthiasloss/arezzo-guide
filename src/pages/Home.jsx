@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Route, Landmark, Info, ChevronRight, Sun, Phone, Grape } from 'lucide-react'
+import { MapPin, Route, Landmark, Info, ChevronRight, Sun, Phone, Grape, Video, ExternalLink } from 'lucide-react'
 import { places } from '../data/places'
 import { tours } from '../data/tours'
 
@@ -101,6 +101,41 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+      )}
+
+      {/* Webcam Section */}
+      {fattoria?.webcam && (
+        <section className="px-5 mt-8">
+          <a
+            href={fattoria.webcam}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-white rounded-2xl shadow-tuscan overflow-hidden card-hover"
+          >
+            <div className="relative">
+              <div className="bg-gradient-to-br from-[#4a3728] to-[#2d2118] aspect-video flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Video size={32} className="text-white" />
+                  </div>
+                  <p className="text-white/90 font-medium">Live Webcam</p>
+                  <p className="text-white/60 text-sm mt-1">Piazzetta & Hofladen</p>
+                </div>
+              </div>
+              <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                LIVE
+              </div>
+            </div>
+            <div className="p-4 flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-[#4a3728]">Fattoria La Vialla Webcam</h3>
+                <p className="text-sm text-[#4a3728]/60">Blick auf die Piazzetta</p>
+              </div>
+              <ExternalLink size={20} className="text-[#c75b39]" />
+            </div>
+          </a>
         </section>
       )}
 

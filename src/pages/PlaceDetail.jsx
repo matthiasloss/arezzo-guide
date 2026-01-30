@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Star, MapPin, Clock, Phone, Globe, ChevronRight, Navigation, Lightbulb } from 'lucide-react'
+import { ArrowLeft, Star, MapPin, Clock, Phone, Globe, ChevronRight, Navigation, Lightbulb, Video, ExternalLink } from 'lucide-react'
 import { places, categories } from '../data/places'
 
 export default function PlaceDetail() {
@@ -8,10 +8,10 @@ export default function PlaceDetail() {
 
   if (!place) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--tuscan-cream)' }}>
         <div className="text-center">
-          <p className="text-gray-500">Ort nicht gefunden</p>
-          <Link to="/orte" className="text-purple-600 mt-2 block">
+          <p className="text-[#4a3728]/60">Ort nicht gefunden</p>
+          <Link to="/orte" className="text-[#c75b39] mt-2 block font-medium">
             Zurück zur Übersicht
           </Link>
         </div>
@@ -29,18 +29,19 @@ export default function PlaceDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-purple-50 pb-8">
+    <div className="min-h-screen pb-8" style={{ background: 'var(--tuscan-cream)' }}>
       {/* Header */}
-      <div className="bg-gradient-to-br from-purple-600 to-purple-700 text-white">
-        <div className="px-4 py-4">
-          <Link to="/orte" className="inline-flex items-center gap-2 text-purple-200 mb-4">
+      <div className="gradient-tuscan text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div className="px-5 py-5 relative">
+          <Link to="/orte" className="inline-flex items-center gap-2 text-white/70 mb-4 btn-press">
             <ArrowLeft size={20} />
             <span>Zurück</span>
           </Link>
 
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-purple-200 text-sm">{category?.name}</p>
+              <p className="text-white/70 text-sm font-medium">{category?.name}</p>
               <h1 className="text-2xl font-bold mt-1">{place.name}</h1>
               {place.rating && (
                 <div className="flex items-center gap-1 mt-2">
@@ -48,24 +49,26 @@ export default function PlaceDetail() {
                     <Star
                       key={i}
                       size={16}
-                      className={i < place.rating ? 'text-amber-400 fill-amber-400' : 'text-purple-400'}
+                      className={i < place.rating ? 'text-amber-300 fill-amber-300' : 'text-white/30'}
                     />
                   ))}
                 </div>
               )}
             </div>
-            <span className="text-4xl">{getCategoryEmoji(place.category)}</span>
+            <div className="bg-white/20 p-3 rounded-2xl">
+              <span className="text-3xl">{getCategoryEmoji(place.category)}</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="px-4 -mt-4">
-        <div className="bg-white rounded-xl shadow-lg p-4 flex gap-3">
+      <div className="px-5 -mt-5 relative z-10">
+        <div className="bg-white rounded-2xl shadow-tuscan-lg p-4 flex gap-3">
           {place.coordinates && (
             <button
               onClick={openInMaps}
-              className="flex-1 bg-purple-600 text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2"
+              className="flex-1 gradient-tuscan text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 btn-press shadow-lg"
             >
               <Navigation size={18} />
               Route
@@ -74,7 +77,7 @@ export default function PlaceDetail() {
           {place.phone && (
             <a
               href={`tel:${place.phone}`}
-              className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium flex items-center justify-center gap-2"
+              className="flex-1 bg-[#4a3728]/5 text-[#4a3728] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 btn-press"
             >
               <Phone size={18} />
               Anrufen
@@ -85,7 +88,7 @@ export default function PlaceDetail() {
               href={place.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium flex items-center justify-center gap-2"
+              className="flex-1 bg-[#4a3728]/5 text-[#4a3728] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 btn-press"
             >
               <Globe size={18} />
               Website
@@ -94,65 +97,103 @@ export default function PlaceDetail() {
         </div>
       </div>
 
+      {/* Webcam Link (for Fattoria) */}
+      {place.webcam && (
+        <div className="px-5 mt-5">
+          <a
+            href={place.webcam}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-white rounded-2xl shadow-tuscan overflow-hidden card-hover"
+          >
+            <div className="relative">
+              <div className="bg-gradient-to-br from-[#4a3728] to-[#2d2118] aspect-[21/9] flex items-center justify-center">
+                <div className="text-center">
+                  <Video size={28} className="text-white mx-auto mb-2" />
+                  <p className="text-white/90 font-medium">Live Webcam ansehen</p>
+                </div>
+              </div>
+              <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                LIVE
+              </div>
+              <div className="absolute top-3 right-3">
+                <ExternalLink size={18} className="text-white/70" />
+              </div>
+            </div>
+          </a>
+        </div>
+      )}
+
       {/* Description */}
-      <div className="px-4 mt-6">
-        <div className="bg-white rounded-xl p-4 shadow-sm">
-          <h2 className="font-semibold text-gray-800 mb-2">Beschreibung</h2>
-          <p className="text-gray-600 whitespace-pre-line">
+      <div className="px-5 mt-5">
+        <div className="bg-white rounded-2xl p-5 shadow-tuscan">
+          <h2 className="font-semibold text-[#4a3728] mb-3">Beschreibung</h2>
+          <p className="text-[#4a3728]/70 whitespace-pre-line leading-relaxed">
             {place.longDescription || place.description}
           </p>
         </div>
       </div>
 
       {/* Info Grid */}
-      <div className="px-4 mt-4">
-        <div className="bg-white rounded-xl p-4 shadow-sm space-y-4">
+      <div className="px-5 mt-4">
+        <div className="bg-white rounded-2xl p-5 shadow-tuscan space-y-4">
           {place.address && (
-            <div className="flex items-start gap-3">
-              <MapPin size={20} className="text-gray-400 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4">
+              <div className="bg-[#c75b39]/10 p-2 rounded-xl">
+                <MapPin size={18} className="text-[#c75b39]" />
+              </div>
               <div>
-                <p className="text-sm text-gray-500">Adresse</p>
-                <p className="text-gray-800">{place.address}</p>
+                <p className="text-sm text-[#4a3728]/50 font-medium">Adresse</p>
+                <p className="text-[#4a3728]">{place.address}</p>
               </div>
             </div>
           )}
 
           {place.openingHours && (
-            <div className="flex items-start gap-3">
-              <Clock size={20} className="text-gray-400 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4">
+              <div className="bg-[#5a7247]/10 p-2 rounded-xl">
+                <Clock size={18} className="text-[#5a7247]" />
+              </div>
               <div>
-                <p className="text-sm text-gray-500">Öffnungszeiten</p>
-                <p className="text-gray-800">{place.openingHours}</p>
+                <p className="text-sm text-[#4a3728]/50 font-medium">Öffnungszeiten</p>
+                <p className="text-[#4a3728]">{place.openingHours}</p>
               </div>
             </div>
           )}
 
           {place.price && (
-            <div className="flex items-start gap-3">
-              <span className="text-gray-400 flex-shrink-0">€</span>
+            <div className="flex items-start gap-4">
+              <div className="bg-[#d4a853]/20 p-2 rounded-xl">
+                <span className="text-[#9a7a2e] font-bold text-sm">€</span>
+              </div>
               <div>
-                <p className="text-sm text-gray-500">Eintritt</p>
-                <p className="text-gray-800">{place.price}</p>
+                <p className="text-sm text-[#4a3728]/50 font-medium">Eintritt</p>
+                <p className="text-[#4a3728]">{place.price}</p>
               </div>
             </div>
           )}
 
           {place.duration && (
-            <div className="flex items-start gap-3">
-              <Clock size={20} className="text-gray-400 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4">
+              <div className="bg-[#5a7247]/10 p-2 rounded-xl">
+                <Clock size={18} className="text-[#5a7247]" />
+              </div>
               <div>
-                <p className="text-sm text-gray-500">Empfohlene Dauer</p>
-                <p className="text-gray-800">{place.duration}</p>
+                <p className="text-sm text-[#4a3728]/50 font-medium">Empfohlene Dauer</p>
+                <p className="text-[#4a3728]">{place.duration}</p>
               </div>
             </div>
           )}
 
           {place.distance && (
-            <div className="flex items-start gap-3">
-              <Navigation size={20} className="text-gray-400 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4">
+              <div className="bg-[#c75b39]/10 p-2 rounded-xl">
+                <Navigation size={18} className="text-[#c75b39]" />
+              </div>
               <div>
-                <p className="text-sm text-gray-500">Entfernung</p>
-                <p className="text-gray-800">{place.distance}</p>
+                <p className="text-sm text-[#4a3728]/50 font-medium">Entfernung</p>
+                <p className="text-[#4a3728]">{place.distance}</p>
               </div>
             </div>
           )}
@@ -161,16 +202,16 @@ export default function PlaceDetail() {
 
       {/* Tips */}
       {place.tips && place.tips.length > 0 && (
-        <div className="px-4 mt-4">
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+        <div className="px-5 mt-4">
+          <div className="bg-[#d4a853]/15 border border-[#d4a853]/30 rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Lightbulb size={20} className="text-amber-600" />
-              <h3 className="font-semibold text-amber-800">Tipps</h3>
+              <Lightbulb size={20} className="text-[#9a7a2e]" />
+              <h3 className="font-semibold text-[#4a3728]">Tipps</h3>
             </div>
             <ul className="space-y-2">
               {place.tips.map((tip, index) => (
-                <li key={index} className="flex items-start gap-2 text-amber-900">
-                  <span className="text-amber-500 mt-1">•</span>
+                <li key={index} className="flex items-start gap-3 text-[#4a3728]/80">
+                  <span className="text-[#d4a853] mt-0.5">•</span>
                   <span>{tip}</span>
                 </li>
               ))}
@@ -181,19 +222,19 @@ export default function PlaceDetail() {
 
       {/* Show on Map Link */}
       {place.coordinates && (
-        <div className="px-4 mt-4">
+        <div className="px-5 mt-4">
           <Link
             to="/karte"
-            className="block bg-white rounded-xl p-4 shadow-sm"
+            className="block bg-white rounded-2xl p-4 shadow-tuscan card-hover"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-purple-100 p-2 rounded-lg">
-                  <MapPin size={20} className="text-purple-600" />
+                <div className="gradient-olive p-2.5 rounded-xl">
+                  <MapPin size={18} className="text-white" />
                 </div>
-                <span className="font-medium text-gray-800">Auf Karte anzeigen</span>
+                <span className="font-semibold text-[#4a3728]">Auf Karte anzeigen</span>
               </div>
-              <ChevronRight className="text-gray-400" size={20} />
+              <ChevronRight className="text-[#4a3728]/30" size={20} />
             </div>
           </Link>
         </div>
