@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+/* Custom Toscana color scheme */
+:root {
+  --color-tuscan-red: #a0522d;
+  --color-olive: #6b8e23;
+  --color-terracotta: #e2725b;
+  --color-cream: #fffdd0;
+}
+
+/* Leaflet map fixes */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better touch targets on mobile */
+@media (max-width: 640px) {
+  button, a {
+    min-height: 44px;
+  }
+}
+
+/* Hide scrollbar but allow scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
