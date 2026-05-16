@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { CircleMarker, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import { Filter, LocateFixed, Route as RouteIcon } from 'lucide-react'
 import L from 'leaflet'
 import { categories, places } from '../data/places'
@@ -40,6 +40,8 @@ export default function MapPage() {
   const [selectedCategories, setSelectedCategories] = useState(new Set(['all']))
   const [showTours, setShowTours] = useState(true)
   const [showFilter, setShowFilter] = useState(false)
+  const [userLocation, setUserLocation] = useState(null)
+  const [locationStatus, setLocationStatus] = useState('')
 
   const filteredPlaces = useMemo(() => {
     if (selectedCategories.has('all')) return places.filter((place) => place.coordinates)
@@ -56,6 +58,33 @@ export default function MapPage() {
       if (next.size === 0) next.add('all')
       return next
     })
+  }
+
+  const locateUser = () => {
+    if (!navigator.geolocation) {
+      setLocationStatus('Standort wird auf diesem Gerät nicht unterstützt.')
+      return
+    }
+
+    setLocationStatus('Standort wird gesucht...')
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const nextLocation = {
+          coordinates: [position.coords.latitude, position.coords.longitude],
+          accuracy: position.coords.accuracy,
+        }
+        setUserLocation(nextLocation)
+        setLocationStatus('Standort gefunden')
+      },
+      () => {
+        setLocationStatus('Standortfreigabe nicht erlaubt oder nicht verfügbar.')
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 12000,
+        maximumAge: 60000,
+      },
+    )
   }
 
   return (
@@ -92,6 +121,7 @@ export default function MapPage() {
 
       <div className="relative flex-1">
         <MapContainer center={DEFAULT_CENTER} zoom={DEFAULT_ZOOM} className="h-full w-full" zoomControl={false}>
+          <RecenterOnLocation location={userLocation} />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -124,7 +154,39 @@ export default function MapPage() {
               </Popup>
             </Marker>
           ))}
+
+          {userLocation && (
+            <CircleMarker
+              center={userLocation.coordinates}
+              pathOptions={{ color: '#1d4ed8', fillColor: '#3b82f6', fillOpacity: 0.35, weight: 3 }}
+              radius={12}
+            >
+              <Popup>
+                <div className="min-w-[180px]">
+                  <h3 className="font-bold text-[#20312a]">Dein Standort</h3>
+                  <p className="mt-1 text-sm text-[#20312a]/70">
+                    Genauigkeit ca. {Math.round(userLocation.accuracy)} m
+                  </p>
+                </div>
+              </Popup>
+            </CircleMarker>
+          )}
         </MapContainer>
+
+        <div className="absolute right-4 top-16 z-[1000] flex flex-col items-end gap-2">
+          <button
+            onClick={locateUser}
+            className="flex items-center gap-2 rounded-lg bg-[#1d4ed8] px-4 py-3 text-sm font-bold text-white shadow-lg"
+          >
+            <LocateFixed size={18} />
+            Mein Standort
+          </button>
+          {locationStatus && (
+            <div className="max-w-[230px] rounded-lg bg-white px-3 py-2 text-right text-xs font-semibold text-[#20312a]/75 shadow-lg">
+              {locationStatus}
+            </div>
+          )}
+        </div>
 
         <div className="absolute bottom-4 left-4 z-[1000] rounded-lg bg-white p-3 shadow-lg">
           <p className="mb-2 text-xs font-bold text-[#20312a]/60">Legende</p>
@@ -139,6 +201,18 @@ export default function MapPage() {
       </div>
     </div>
   )
+}
+
+function RecenterOnLocation({ location }) {
+  const map = useMap()
+
+  useEffect(() => {
+    if (location) {
+      map.setView(location.coordinates, Math.max(map.getZoom(), 15), { animate: true })
+    }
+  }, [location, map])
+
+  return null
 }
 
 function chipClass(active) {
