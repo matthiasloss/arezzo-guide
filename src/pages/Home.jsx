@@ -1,201 +1,142 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Route, Landmark, Info, ChevronRight, Sun, Phone, Grape, Video, ExternalLink } from 'lucide-react'
-import { places } from '../data/places'
+import { AlertTriangle, ArrowRight, CloudSun, Compass, Download, Map, Mountain, Route, ShieldCheck, TreePine } from 'lucide-react'
 import { tours } from '../data/tours'
 
+const heroImage = 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=82'
+
 const quickLinks = [
-  { to: '/orte', icon: MapPin, label: 'Sehenswürdigkeiten', gradient: 'from-amber-500 to-orange-500' },
-  { to: '/touren', icon: Route, label: 'Touren planen', gradient: 'from-emerald-500 to-green-600' },
-  { to: '/karte', icon: Landmark, label: 'Karte öffnen', gradient: 'from-blue-500 to-indigo-500' },
-  { to: '/info', icon: Info, label: 'Praktische Infos', gradient: 'from-violet-500 to-purple-600' },
+  { to: '/touren', icon: Route, label: 'Tour finden', sub: 'nach Kondition und Wetter' },
+  { to: '/karte', icon: Map, label: 'Karte', sub: 'Startpunkte und Orte' },
+  { to: '/info', icon: ShieldCheck, label: 'Sicher gehen', sub: 'Checklisten und Notfall' },
+]
+
+const dayPlans = [
+  { title: 'Erster Tag', route: 'Poppi & Arno-Runde', text: 'Einlaufen, Burg anschauen, Fusse testen.' },
+  { title: 'Bester Waldtag', route: 'Camaldoli - Poggio Scali', text: 'Der Casentino-Klassiker fur Schatten und Stille.' },
+  { title: 'Grosser Tag', route: 'Monte Falterona & Lago degli Idoli', text: 'Nur bei stabilem Wetter und guter Sicht.' },
 ]
 
 export default function Home() {
-  const fattoria = places.find(p => p.id === 'fattoria-lavialla')
-  const featuredTours = tours.slice(0, 2)
+  const featuredTours = tours.slice(0, 3)
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <div className="gradient-tuscan text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
-
-        <div className="relative px-5 pt-10 pb-16 safe-area-top">
-          <div className="flex items-center gap-2 mb-3">
-            <Sun className="text-amber-200" size={22} />
-            <span className="text-white/80 text-sm font-medium">Willkommen in der Toskana</span>
+    <div className="min-h-screen bg-[#f4f1e8] text-[#20312a]">
+      <section className="relative min-h-[78vh] overflow-hidden text-white">
+        <img
+          src={heroImage}
+          alt="Waldweg in den Bergen"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/25 to-[#20312a]/90" />
+        <div className="relative flex min-h-[78vh] flex-col justify-end px-5 pb-24 pt-14 safe-area-top">
+          <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-3 py-2 text-sm font-medium backdrop-blur">
+            <TreePine size={16} />
+            Foreste Casentinesi, La Verna, Camaldoli
           </div>
-          <h1 className="text-4xl font-bold mb-2 tracking-tight">
-            Arezzo Guide
+          <h1 className="max-w-xl text-4xl font-bold leading-tight tracking-normal sm:text-6xl">
+            Casentino Wander-App
           </h1>
-          <p className="text-white/90 text-lg font-light">
-            Dein Reisebegleiter für die Region Arezzo & Fattoria Lavialla
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/90">
+            Kuratierte Touren, Startpunkte, Sicherheitschecks und schnelle Links zu offiziellen Karten, damit du im Casentino gut vorbereitet losgehst.
           </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link to="/touren" className="inline-flex items-center gap-2 rounded-lg bg-[#f7c948] px-5 py-3 font-bold text-[#20312a] shadow-lg">
+              Tour auswahlen <ArrowRight size={18} />
+            </Link>
+            <Link to="/karte" className="inline-flex items-center gap-2 rounded-lg bg-white/15 px-5 py-3 font-semibold text-white backdrop-blur">
+              Karte ansehen <Map size={18} />
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Quick Links */}
-      <div className="px-5 -mt-8 relative z-10">
-        <div className="grid grid-cols-2 gap-3">
-          {quickLinks.map(({ to, icon: Icon, label, gradient }) => (
-            <Link
-              key={to}
-              to={to}
-              className="bg-white rounded-2xl p-4 shadow-tuscan card-hover flex items-center gap-3"
-            >
-              <div className={`bg-gradient-to-br ${gradient} p-2.5 rounded-xl shadow-lg`}>
-                <Icon size={20} className="text-white" />
+      <section className="-mt-16 px-5 relative z-10">
+        <div className="grid gap-3 sm:grid-cols-3">
+          {quickLinks.map(({ to, icon: Icon, label, sub }) => (
+            <Link key={to} to={to} className="rounded-lg bg-white p-4 shadow-tuscan card-hover">
+              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-lg bg-[#245447] text-white">
+                <Icon size={22} />
               </div>
-              <span className="font-semibold text-[#4a3728] text-sm">{label}</span>
+              <h2 className="font-bold">{label}</h2>
+              <p className="mt-1 text-sm text-[#20312a]/65">{sub}</p>
             </Link>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Fattoria Lavialla Section */}
-      {fattoria && (
-        <section className="px-5 mt-8">
-          <div className="bg-white rounded-3xl shadow-tuscan-lg overflow-hidden card-hover">
-            <div className="gradient-wine p-5 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-              <div className="flex items-center justify-between relative">
-                <div>
-                  <p className="text-white/70 text-sm font-medium">Deine Unterkunft</p>
-                  <h2 className="text-2xl font-bold text-white mt-1">{fattoria.name}</h2>
-                </div>
-                <div className="bg-white/20 p-3 rounded-2xl">
-                  <Grape size={28} className="text-white" />
-                </div>
-              </div>
-            </div>
-            <div className="p-5">
-              <p className="text-[#4a3728]/70 mb-4 leading-relaxed">{fattoria.description}</p>
-              <div className="flex flex-wrap gap-2 mb-5">
-                <span className="tag tag-terracotta">
-                  Bio-Bauernhof
-                </span>
-                <span className="tag tag-gold">
-                  Weingut
-                </span>
-                <span className="tag tag-olive">
-                  Restaurant
-                </span>
-              </div>
-              <div className="flex gap-3">
-                <Link
-                  to={`/orte/${fattoria.id}`}
-                  className="flex-1 gradient-tuscan text-white py-3 px-5 rounded-xl text-center font-semibold shadow-lg btn-press"
-                >
-                  Details ansehen
-                </Link>
-                {fattoria.phone && (
-                  <a
-                    href={`tel:${fattoria.phone}`}
-                    className="bg-[#4a3728]/5 p-3 rounded-xl btn-press"
-                  >
-                    <Phone size={22} className="text-[#4a3728]" />
-                  </a>
-                )}
-              </div>
-            </div>
+      <section className="px-5 py-8">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-[#6b7b3e]">Schnellstart</p>
+            <h2 className="text-2xl font-bold">Heute gut losgehen</h2>
           </div>
-        </section>
-      )}
-
-      {/* Webcam Section */}
-      {fattoria?.webcam && (
-        <section className="px-5 mt-6">
-          <a
-            href={fattoria.webcam}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-4 bg-white rounded-2xl p-4 shadow-tuscan card-hover"
-          >
-            <div className="relative flex-shrink-0">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#4a3728] to-[#2d2118] rounded-xl flex items-center justify-center">
-                <Video size={24} className="text-white" />
-              </div>
-              <div className="absolute -top-1 -right-1 bg-red-500 w-3 h-3 rounded-full border-2 border-white animate-pulse"></div>
+          <CloudSun className="text-[#d47b35]" size={28} />
+        </div>
+        <div className="grid gap-3 lg:grid-cols-3">
+          {dayPlans.map((plan) => (
+            <div key={plan.title} className="rounded-lg border border-[#d9d3c3] bg-white/80 p-4">
+              <p className="text-sm font-semibold text-[#6b7b3e]">{plan.title}</p>
+              <h3 className="mt-1 font-bold">{plan.route}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#20312a]/70">{plan.text}</p>
             </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-[#4a3728]">Live Webcam</h3>
-              <p className="text-sm text-[#4a3728]/60">Piazzetta & Hofladen</p>
-            </div>
-            <ExternalLink size={18} className="text-[#c75b39] flex-shrink-0" />
-          </a>
-        </section>
-      )}
+          ))}
+        </div>
+      </section>
 
-      {/* Featured Tours */}
-      <section className="px-5 mt-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-[#4a3728]">Beliebte Touren</h2>
-          <Link to="/touren" className="text-[#c75b39] text-sm font-semibold flex items-center gap-1">
-            Alle <ChevronRight size={16} />
+      <section className="px-5 pb-8">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Empfohlene Touren</h2>
+          <Link to="/touren" className="inline-flex items-center gap-1 font-semibold text-[#245447]">
+            Alle <ArrowRight size={16} />
           </Link>
         </div>
         <div className="space-y-3">
-          {featuredTours.map((tour, index) => (
-            <Link
-              key={tour.id}
-              to={`/touren/${tour.id}`}
-              className="block bg-white rounded-2xl p-4 shadow-tuscan card-hover"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="flex items-start gap-4">
-                <div className="gradient-olive p-3 rounded-xl shadow-md">
-                  <Route size={22} className="text-white" />
+          {featuredTours.map((tour) => (
+            <Link key={tour.id} to={`/touren/${tour.id}`} className="block rounded-lg bg-white p-4 shadow-tuscan card-hover">
+              <div className="flex gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#245447] text-white">
+                  <Mountain size={23} />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-[#4a3728]">{tour.name}</h3>
-                  <p className="text-sm text-[#4a3728]/60 mt-0.5">{tour.subtitle}</p>
-                  <div className="flex gap-3 mt-2 text-xs text-[#4a3728]/40 font-medium">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="font-bold">{tour.name}</h3>
+                    <span className="rounded bg-[#edf2df] px-2 py-1 text-xs font-semibold text-[#50622f]">{tour.difficulty}</span>
+                  </div>
+                  <p className="mt-1 text-sm text-[#20312a]/65">{tour.subtitle}</p>
+                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-medium text-[#20312a]/60">
+                    <span>{tour.distance}</span>
+                    <span>{tour.elevation}</span>
                     <span>{tour.duration}</span>
-                    <span>•</span>
-                    <span>{tour.difficulty}</span>
+                    <span>{tour.routeType}</span>
                   </div>
                 </div>
-                <ChevronRight className="text-[#4a3728]/20 mt-1" size={20} />
               </div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* Highlights Section */}
-      <section className="px-5 mt-8 mb-6">
-        <h2 className="text-xl font-bold text-[#4a3728] mb-4">Highlights der Region</h2>
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            { emoji: '🏛️', label: 'Arezzo Altstadt' },
-            { emoji: '🍷', label: 'Chianti Weine' },
-            { emoji: '🏔️', label: 'Cortona' },
-            { emoji: '🎨', label: 'Piero Fresken' },
-            { emoji: '🌳', label: 'Casentino' },
-            { emoji: '🧀', label: 'Pecorino' },
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl p-4 shadow-tuscan text-center card-hover"
-            >
-              <span className="text-3xl">{item.emoji}</span>
-              <p className="text-xs text-[#4a3728]/70 mt-2 font-medium">{item.label}</p>
+      <section className="px-5 pb-10">
+        <div className="rounded-lg bg-[#20312a] p-5 text-white">
+          <div className="flex gap-3">
+            <AlertTriangle className="mt-1 shrink-0 text-[#f7c948]" />
+            <div>
+              <h2 className="font-bold">Wichtig vor jeder Tour</h2>
+              <p className="mt-2 text-sm leading-relaxed text-white/80">
+                Diese App plant und sortiert. Fur Wegzustand, Sperrungen und Detailnavigation immer die offiziellen Parkquellen, Wetterbericht und eine Offline-Karte prufen.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <a href="https://www.parcoforestecasentinesi.it/it/multimedia/app-parco/pnfc-trekking-map" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-bold text-[#20312a]">
+                  <Download size={16} /> PNFC Map
+                </a>
+                <Link to="/info" className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-sm font-bold text-white">
+                  <Compass size={16} /> Checkliste
+                </Link>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
-
-      {/* Offline Notice */}
-      <div className="px-5 mb-8">
-        <div className="bg-[#5a7247]/10 border border-[#5a7247]/20 rounded-2xl p-4">
-          <p className="text-[#5a7247] text-sm">
-            <strong>Offline verfügbar:</strong> Diese App funktioniert auch ohne Internet.
-            Karten werden beim ersten Laden gespeichert.
-          </p>
-        </div>
-      </div>
     </div>
   )
 }

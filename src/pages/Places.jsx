@@ -117,8 +117,6 @@ export default function Places() {
 }
 
 function PlaceCard({ place, index }) {
-  const category = categories.find(c => c.id === place.category)
-
   return (
     <Link
       to={`/orte/${place.id}`}
@@ -157,26 +155,22 @@ function PlaceCard({ place, index }) {
 
 function getCategoryEmoji(category) {
   const emojis = {
-    fattoria: '🏡',
-    sehenswuerdigkeiten: '🏛️',
-    restaurants: '🍷',
-    natur: '🌳',
-    shoppen: '🛍️',
-    kultur: '🎨',
-    praktisch: '📍',
+    trailhead: '🥾',
+    village: '🏘️',
+    nature: '🌲',
+    culture: '⛪',
+    service: '📍',
   }
   return emojis[category] || '📍'
 }
 
 function getCategoryColor(category) {
   const colors = {
-    fattoria: '#722f37',
-    sehenswuerdigkeiten: '#d4a853',
-    restaurants: '#c75b39',
-    natur: '#5a7247',
-    shoppen: '#9333ea',
-    kultur: '#3b82f6',
-    praktisch: '#4a3728',
+    trailhead: '#245447',
+    village: '#d47b35',
+    nature: '#3f7d4a',
+    culture: '#6d5aa8',
+    service: '#56616b',
   }
   return colors[category] || '#4a3728'
 }

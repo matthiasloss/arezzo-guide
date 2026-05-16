@@ -1,11 +1,13 @@
 {
-  "name": "arezzo-guide",
+  "name": "casentino-wander-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:lan": "vite --host 0.0.0.0",
     "build": "vite build",
+    "build:github": "GITHUB_PAGES=true vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "generate-icons": "node scripts/generate-icons.js"

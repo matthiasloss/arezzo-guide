@@ -3,7 +3,10 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
+const appBase = process.env.GITHUB_PAGES === 'true' ? '/arezzo-guide/' : '/'
+
 export default defineConfig({
+  base: appBase,
   plugins: [
     react(),
     tailwindcss(),
@@ -11,15 +14,15 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icons/*.png', 'icons/*.svg'],
       manifest: {
-        name: 'Arezzo & Fattoria Lavialla Guide',
-        short_name: 'Arezzo Guide',
-        description: 'Dein Reisebegleiter für Arezzo und die Toskana',
-        theme_color: '#7c3aed',
-        background_color: '#faf5ff',
+        name: 'Casentino Wander-App',
+        short_name: 'Casentino',
+        description: 'Touren, Karte und Sicherheitscheck für Wanderungen im Casentino.',
+        theme_color: '#245447',
+        background_color: '#f4f1e8',
         display: 'standalone',
         orientation: 'portrait',
-        scope: '/',
-        start_url: '/',
+        scope: appBase,
+        start_url: appBase,
         icons: [
           {
             src: 'icons/icon-192.png',

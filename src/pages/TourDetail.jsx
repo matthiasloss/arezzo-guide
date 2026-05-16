@@ -1,194 +1,147 @@
-import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Clock, MapPin, Navigation, Lightbulb, ChevronRight, CheckCircle } from 'lucide-react'
+import { Link, useParams } from 'react-router-dom'
+import { ArrowLeft, CheckCircle, Clock, Compass, Droplets, ExternalLink, Footprints, MapPin, Mountain, Navigation, PawPrint, ShieldAlert, SunMedium, TreePine } from 'lucide-react'
 import { tours } from '../data/tours'
-import { places } from '../data/places'
 
 export default function TourDetail() {
   const { id } = useParams()
-  const tour = tours.find(t => t.id === id)
+  const tour = tours.find((item) => item.id === id)
 
   if (!tour) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-500">Tour nicht gefunden</p>
-          <Link to="/touren" className="text-purple-600 mt-2 block">
-            Zurück zur Übersicht
-          </Link>
+      <div className="flex min-h-screen items-center justify-center bg-[#f4f1e8] px-4 text-center">
+        <div>
+          <p className="font-semibold text-[#20312a]">Tour nicht gefunden</p>
+          <Link to="/touren" className="mt-3 inline-flex text-[#245447]">Zur Tourenubersicht</Link>
         </div>
       </div>
     )
   }
 
+  const startCoords = tour.startCoordinates || tour.stops.find((stop) => stop.coordinates)?.coordinates
+
   return (
-    <div className="min-h-screen bg-purple-50 pb-8">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-green-600 to-emerald-500 text-white">
-        <div className="px-4 py-4">
-          <Link to="/touren" className="inline-flex items-center gap-2 text-green-200 mb-4">
-            <ArrowLeft size={20} />
-            <span>Zurück</span>
-          </Link>
-
-          <h1 className="text-2xl font-bold">{tour.name}</h1>
-          <p className="text-green-100 mt-1">{tour.subtitle}</p>
-
-          <div className="flex flex-wrap gap-3 mt-4">
-            <span className="flex items-center gap-1 bg-white/20 px-3 py-1 rounded-full text-sm">
-              <Clock size={14} />
-              {tour.duration}
-            </span>
-            <span className="flex items-center gap-1 bg-white/20 px-3 py-1 rounded-full text-sm">
-              <MapPin size={14} />
-              {tour.distance}
-            </span>
-            <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
-              {tour.difficulty}
-            </span>
-          </div>
+    <div className="min-h-screen bg-[#f4f1e8] pb-8 text-[#20312a]">
+      <header className="bg-[#20312a] px-4 pb-7 pt-5 text-white safe-area-top">
+        <Link to="/touren" className="mb-5 inline-flex items-center gap-2 text-white/75">
+          <ArrowLeft size={20} />
+          Zuruck
+        </Link>
+        <p className="text-sm font-semibold uppercase tracking-wide text-[#f7c948]">{tour.start}</p>
+        <h1 className="mt-1 text-3xl font-bold leading-tight">{tour.name}</h1>
+        <p className="mt-2 text-white/80">{tour.subtitle}</p>
+        <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <HeroMeta icon={Clock} label={tour.duration} />
+          <HeroMeta icon={Footprints} label={tour.distance} />
+          <HeroMeta icon={Mountain} label={tour.elevation} />
+          <HeroMeta icon={Compass} label={tour.difficulty} />
         </div>
-      </div>
+      </header>
 
-      {/* Description */}
-      <div className="px-4 mt-6">
-        <div className="bg-white rounded-xl p-4 shadow-sm">
-          <h2 className="font-semibold text-gray-800 mb-2">Über diese Tour</h2>
-          <p className="text-gray-600 whitespace-pre-line">
-            {tour.longDescription || tour.description}
-          </p>
-        </div>
-      </div>
+      <main className="px-4">
+        <section className="-mt-4 rounded-lg bg-white p-4 shadow-tuscan">
+          <h2 className="font-bold">Warum diese Tour?</h2>
+          <p className="mt-2 whitespace-pre-line leading-relaxed text-[#20312a]/75">{tour.longDescription}</p>
+        </section>
 
-      {/* Best Time */}
-      {tour.bestTime && (
-        <div className="px-4 mt-4">
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-            <p className="text-amber-800">
-              <strong>Beste Zeit:</strong> {tour.bestTime}
-            </p>
-          </div>
-        </div>
-      )}
+        <section className="mt-4 grid gap-3 sm:grid-cols-2">
+          <InfoTile icon={SunMedium} title="Beste Zeit" text={tour.season} />
+          <InfoTile icon={Droplets} title="Wasser" text={tour.water} />
+          <InfoTile icon={PawPrint} title="Hund" text={tour.dog} />
+          <InfoTile icon={TreePine} title="Schatten" text={tour.shade} />
+        </section>
 
-      {/* Stops */}
-      <div className="px-4 mt-6">
-        <h2 className="text-lg font-bold text-gray-800 mb-4">
-          Stationen ({tour.stops.length})
-        </h2>
-
-        <div className="space-y-3">
-          {tour.stops.map((stop, index) => {
-            const linkedPlace = stop.placeId ? places.find(p => p.id === stop.placeId) : null
-
-            return (
-              <div
-                key={index}
-                className="bg-white rounded-xl shadow-sm overflow-hidden"
-              >
-                <div className="p-4">
-                  <div className="flex gap-4">
-                    {/* Number indicator */}
-                    <div className="flex flex-col items-center">
-                      <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-sm">
-                        {index + 1}
-                      </div>
-                      {index < tour.stops.length - 1 && (
-                        <div className="w-0.5 h-full bg-green-200 mt-2" />
-                      )}
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 pb-2">
-                      <h3 className="font-semibold text-gray-800">
-                        {stop.name}
-                      </h3>
-                      {stop.description && (
-                        <p className="text-sm text-gray-500 mt-1">
-                          {stop.description}
-                        </p>
-                      )}
-                      {stop.note && (
-                        <p className="text-sm text-purple-600 mt-1">
-                          {stop.note}
-                        </p>
-                      )}
-                      {stop.duration && (
-                        <span className="inline-flex items-center gap-1 text-xs text-gray-400 mt-2">
-                          <Clock size={12} />
-                          {stop.duration}
-                        </span>
-                      )}
-
-                      {/* Link to place if exists */}
-                      {linkedPlace && (
-                        <Link
-                          to={`/orte/${linkedPlace.id}`}
-                          className="mt-3 flex items-center justify-between p-2 bg-purple-50 rounded-lg"
-                        >
-                          <span className="text-sm font-medium text-purple-700">
-                            Details ansehen
-                          </span>
-                          <ChevronRight size={16} className="text-purple-400" />
-                        </Link>
-                      )}
-
-                      {/* Navigation button for coordinates */}
+        <section className="mt-5">
+          <h2 className="mb-3 text-lg font-bold">Stationen</h2>
+          <div className="space-y-3">
+            {tour.stops.map((stop, index) => (
+              <div key={`${stop.name}-${index}`} className="rounded-lg bg-white p-4 shadow-sm">
+                <div className="flex gap-3">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#245447] text-sm font-bold text-white">
+                    {index + 1}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-bold">{stop.name}</h3>
+                    {stop.description && <p className="mt-1 text-sm leading-relaxed text-[#20312a]/65">{stop.description}</p>}
+                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs font-semibold text-[#20312a]/55">
+                      {stop.duration && <span className="inline-flex items-center gap-1"><Clock size={13} />{stop.duration}</span>}
                       {stop.coordinates && (
                         <button
-                          onClick={() => {
-                            const [lat, lng] = stop.coordinates
-                            window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank')
-                          }}
-                          className="mt-3 flex items-center gap-2 text-sm text-gray-600"
+                          onClick={() => openNavigation(stop.coordinates)}
+                          className="inline-flex items-center gap-1 text-[#245447]"
                         >
-                          <Navigation size={14} />
-                          <span>Navigation starten</span>
+                          <Navigation size={13} /> Navigation
                         </button>
                       )}
                     </div>
                   </div>
                 </div>
               </div>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* Tips */}
-      {tour.tips && tour.tips.length > 0 && (
-        <div className="px-4 mt-6">
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Lightbulb size={20} className="text-amber-600" />
-              <h3 className="font-semibold text-amber-800">Tipps für diese Tour</h3>
-            </div>
-            <ul className="space-y-2">
-              {tour.tips.map((tip, index) => (
-                <li key={index} className="flex items-start gap-2 text-amber-900">
-                  <CheckCircle size={16} className="text-amber-500 flex-shrink-0 mt-0.5" />
-                  <span>{tip}</span>
-                </li>
-              ))}
-            </ul>
+            ))}
           </div>
-        </div>
-      )}
+        </section>
 
-      {/* Start Tour Button */}
-      {tour.stops[0]?.coordinates && (
-        <div className="px-4 mt-6">
+        <section className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-4">
+          <div className="mb-3 flex items-center gap-2">
+            <ShieldAlert className="text-amber-700" />
+            <h2 className="font-bold text-amber-950">Vor dem Start prufen</h2>
+          </div>
+          <ul className="space-y-2">
+            {tour.tips.map((tip) => (
+              <li key={tip} className="flex gap-2 text-sm leading-relaxed text-amber-950/80">
+                <CheckCircle className="mt-0.5 shrink-0 text-amber-700" size={16} />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {tour.links?.length > 0 && (
+          <section className="mt-5 rounded-lg bg-white p-4 shadow-sm">
+            <h2 className="font-bold">Offizielle Links</h2>
+            <div className="mt-3 space-y-2">
+              {tour.links.map((link) => (
+                <a key={link.url} href={link.url} target="_blank" rel="noreferrer" className="flex items-center justify-between rounded-lg bg-[#f4f1e8] px-3 py-3 font-semibold text-[#245447]">
+                  {link.label}
+                  <ExternalLink size={16} />
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {startCoords && (
           <button
-            onClick={() => {
-              const [lat, lng] = tour.stops[0].coordinates
-              window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank')
-            }}
-            className="w-full bg-green-600 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2"
+            onClick={() => openNavigation(startCoords)}
+            className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-[#245447] px-4 py-4 font-bold text-white shadow-lg"
           >
             <Navigation size={20} />
-            Tour starten - zum Startpunkt navigieren
+            Zum Startpunkt navigieren
           </button>
-        </div>
-      )}
+        )}
+      </main>
     </div>
   )
+}
+
+function HeroMeta({ icon: Icon, label }) {
+  return (
+    <div className="rounded-lg bg-white/10 p-3 backdrop-blur">
+      <Icon className="mb-2 text-[#f7c948]" size={18} />
+      <p className="text-sm font-bold">{label}</p>
+    </div>
+  )
+}
+
+function InfoTile({ icon: Icon, title, text }) {
+  return (
+    <div className="rounded-lg bg-white p-4 shadow-sm">
+      <Icon className="mb-3 text-[#245447]" />
+      <p className="text-sm font-semibold text-[#20312a]/55">{title}</p>
+      <p className="mt-1 font-bold">{text}</p>
+    </div>
+  )
+}
+
+function openNavigation([lat, lng]) {
+  window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank')
 }

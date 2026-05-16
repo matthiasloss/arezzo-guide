@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
@@ -9,6 +10,10 @@ import TourDetail from './pages/TourDetail'
 import Info from './pages/Info'
 
 function App() {
+  useEffect(() => {
+    document.title = 'Casentino Wander-App'
+  }, [])
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
