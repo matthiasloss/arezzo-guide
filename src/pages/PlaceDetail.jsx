@@ -245,13 +245,12 @@ export default function PlaceDetail() {
 
 function getCategoryEmoji(category) {
   const emojis = {
-    fattoria: '🏡',
-    sehenswuerdigkeiten: '🏛️',
-    restaurants: '🍷',
-    natur: '🌳',
-    shoppen: '🛍️',
-    kultur: '🎨',
-    praktisch: '📍',
+    fattoria: '🍇',
+    trailhead: '🥾',
+    village: '🏘️',
+    nature: '🌲',
+    culture: '⛪',
+    service: '📍',
   }
   return emojis[category] || '📍'
 }

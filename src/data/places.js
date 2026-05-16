@@ -1,6 +1,7 @@
 // Wichtige Orte fur eine Wander-App im Casentino.
 
 export const categories = [
+  { id: 'fattoria', name: 'La Vialla', icon: 'Home', color: 'terracotta' },
   { id: 'trailhead', name: 'Startpunkte', icon: 'MapPin', color: 'green' },
   { id: 'village', name: 'Orte', icon: 'Home', color: 'amber' },
   { id: 'nature', name: 'Natur', icon: 'TreePine', color: 'emerald' },
@@ -9,6 +10,64 @@ export const categories = [
 ]
 
 export const places = [
+  {
+    id: 'fattoria-la-vialla',
+    name: 'Fattoria La Vialla',
+    category: 'fattoria',
+    description: 'Deine Basis: biodynamische Fattoria, Bottega, Merende und Startpunkt fur nahe Spaziergaenge.',
+    longDescription: `Fattoria La Vialla liegt in Via di Meliciano 26 bei Castiglion Fibocchi. Die offizielle Kontaktseite nennt GPS 43°31'41.00"N, 11°46'45.68"E. Von hier aus sind kurze Hausrunden, Castiglion Fibocchi, Ponte Buriano und Arezzo gut erreichbar.
+
+Die Bottega und Merende-Zeiten koennen saisonal sein und Reservierung erfordern. Fuer Besuche, Essen und Camper-/Wohnmobilthemen immer direkt bei La Vialla pruefen.`,
+    coordinates: [43.5281, 11.7794],
+    address: 'Via di Meliciano 26, 52029 Castiglion Fibocchi AR',
+    website: 'https://www.lavialla.com/en-GB/at-the-fattoria/contacts/',
+    webcam: 'https://www.lavialla.com/en-US/at-the-fattoria/webcam',
+    phone: '+39 0575 430020',
+    tips: [
+      'Guter Startpunkt fuer kurze Morgen- und Abendrunden.',
+      'Bei Hof- und Wirtschaftswegen immer Privatbereiche respektieren.',
+      'Merende/Bottega vorab reservieren oder Oeffnungszeiten pruefen.',
+    ],
+    rating: 5,
+    duration: 'Basis',
+  },
+  {
+    id: 'meliciano',
+    name: 'Meliciano',
+    category: 'village',
+    description: 'Kleiner Weiler direkt bei La Vialla, gut als Orientierungspunkt fuer kurze Hausrunden.',
+    longDescription: 'Meliciano ist kein grosser Ausflugsort, aber fur die App wichtig: Hier beginnt die unmittelbare La-Vialla-Umgebung mit kleinen Strassen, Olivenhainen und Feldwegen.',
+    coordinates: [43.5262, 11.7749],
+    address: 'Meliciano, Castiglion Fibocchi AR',
+    tips: ['Langsam gehen, kleine Strassen sind nicht immer breit.', 'Bei Daemmerung Licht oder reflektierende Kleidung nutzen.'],
+    rating: 3,
+    duration: '30-60 Min',
+  },
+  {
+    id: 'castiglion-fibocchi',
+    name: 'Castiglion Fibocchi',
+    category: 'village',
+    description: 'Naheliegender Borgo fuer Kaffee, kurze Runde und Blick Richtung Pratomagno.',
+    longDescription: 'Castiglion Fibocchi ist der naheliegende Ort zur Fattoria. Gut fuer kleine Besorgungen, eine Pause oder als Ziel einer leichten Runde ab La Vialla.',
+    coordinates: [43.5277, 11.7607],
+    address: 'Castiglion Fibocchi AR',
+    website: 'https://www.comune.castiglionfibocchi.ar.it/',
+    tips: ['Gut als kurze Halbtagstour.', 'Im Sommer frueh oder spaet gehen.', 'Oeffentliche Wege gegen Privatwege vor Ort unterscheiden.'],
+    rating: 4,
+    duration: '1-2 Std',
+  },
+  {
+    id: 'ponte-buriano',
+    name: 'Ponte Buriano',
+    category: 'nature',
+    description: 'Historische Bruecke und Arno-Naturbereich, kurzer Ausflug von La Vialla.',
+    longDescription: 'Ponte Buriano ist ein leichter Naturausflug mit Arno-Ufer, Bruecke und flachen Wegen. Sehr gut als Alternative zu Bergtouren bei unsicherem Wetter.',
+    coordinates: [43.4929, 11.7915],
+    address: 'Ponte Buriano, Arezzo AR',
+    tips: ['Fernglas fuer Vogelbeobachtung mitnehmen.', 'Nach Regen koennen Uferwege matschig sein.', 'Mit Ponte a Buriano e Penna als leichte Runde kombinieren.'],
+    rating: 4,
+    duration: '2-4 Std',
+  },
   {
     id: 'eremo-camaldoli',
     name: 'Eremo di Camaldoli',

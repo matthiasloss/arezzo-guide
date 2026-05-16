@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
-import { AlertTriangle, ArrowRight, CloudSun, Compass, Download, Map, Mountain, Route, ShieldCheck, TreePine } from 'lucide-react'
+import { AlertTriangle, ArrowRight, CloudSun, Compass, Download, Grape, Map, Mountain, Route, ShieldCheck, TreePine } from 'lucide-react'
 import { tours } from '../data/tours'
 
 const heroImage = 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=82'
 
 const quickLinks = [
+  { to: '/touren', icon: Grape, label: 'La Vialla nah', sub: 'Runden direkt ab Unterkunft' },
   { to: '/touren', icon: Route, label: 'Tour finden', sub: 'nach Kondition und Wetter' },
   { to: '/karte', icon: Map, label: 'Karte', sub: 'Startpunkte und Orte' },
   { to: '/info', icon: ShieldCheck, label: 'Sicher gehen', sub: 'Checklisten und Notfall' },
@@ -17,7 +18,8 @@ const dayPlans = [
 ]
 
 export default function Home() {
-  const featuredTours = tours.slice(0, 3)
+  const laViallaTours = tours.filter((tour) => tour.category === 'lavialla')
+  const featuredTours = tours.filter((tour) => tour.category !== 'lavialla').slice(0, 3)
 
   return (
     <div className="min-h-screen bg-[#f4f1e8] text-[#20312a]">
@@ -31,7 +33,7 @@ export default function Home() {
         <div className="relative flex min-h-[78vh] flex-col justify-end px-5 pb-24 pt-14 safe-area-top">
           <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-3 py-2 text-sm font-medium backdrop-blur">
             <TreePine size={16} />
-            Foreste Casentinesi, La Verna, Camaldoli
+            La Vialla, Foreste Casentinesi, La Verna
           </div>
           <h1 className="max-w-xl text-4xl font-bold leading-tight tracking-normal sm:text-6xl">
             Casentino Wander-App
@@ -65,6 +67,29 @@ export default function Home() {
       </section>
 
       <section className="px-5 py-8">
+        <div className="mb-4 rounded-lg bg-white p-5 shadow-tuscan">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#9b4a2f] text-white">
+              <Grape size={24} />
+            </div>
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-[#9b4a2f]">Basis La Vialla</p>
+              <h2 className="mt-1 text-2xl font-bold">Rund um die Fattoria</h2>
+              <p className="mt-2 text-sm leading-relaxed text-[#20312a]/70">
+                Kurze Hausrunden, Castiglion Fibocchi und Ponte Buriano sind jetzt als eigene Nahziele eingebaut.
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {laViallaTours.map((tour) => (
+              <Link key={tour.id} to={`/touren/${tour.id}`} className="rounded-lg bg-[#f4f1e8] p-3">
+                <p className="text-sm font-bold text-[#20312a]">{tour.name}</p>
+                <p className="mt-1 text-xs font-semibold text-[#20312a]/60">{tour.distance} · {tour.duration}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="mb-4 flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-[#6b7b3e]">Schnellstart</p>

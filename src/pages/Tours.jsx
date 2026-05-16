@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ChevronRight, Clock, Compass, Droplets, Footprints, Landmark, MapPin, Mountain, Route as RouteIcon, SlidersHorizontal, TreePine, Waves } from 'lucide-react'
+import { ChevronRight, Clock, Compass, Droplets, Footprints, Home, Landmark, MapPin, Mountain, Route as RouteIcon, SlidersHorizontal, TreePine, Waves } from 'lucide-react'
 import { hikingFilters, tourCategories, tours } from '../data/tours'
 
-const iconMap = { MapPin, Landmark, Mountain, TreePine, Footprints, Waves, Compass }
+const iconMap = { MapPin, Landmark, Mountain, TreePine, Footprints, Waves, Compass, Home }
 
 const difficultyStyles = {
   Leicht: 'bg-emerald-100 text-emerald-800',

@@ -156,6 +156,7 @@ function PlaceCard({ place, index }) {
 function getCategoryEmoji(category) {
   const emojis = {
     trailhead: '🥾',
+    fattoria: '🍇',
     village: '🏘️',
     nature: '🌲',
     culture: '⛪',
@@ -167,6 +168,7 @@ function getCategoryEmoji(category) {
 function getCategoryColor(category) {
   const colors = {
     trailhead: '#245447',
+    fattoria: '#9b4a2f',
     village: '#d47b35',
     nature: '#3f7d4a',
     culture: '#6d5aa8',

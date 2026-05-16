@@ -2,6 +2,117 @@
 
 export const tours = [
   {
+    id: 'la-vialla-meliciano-runde',
+    name: 'La Vialla - Meliciano Runde',
+    subtitle: 'Sanfte Hausrunde direkt an der Fattoria',
+    duration: '1-1.5 Std',
+    difficulty: 'Leicht',
+    distance: '4 km',
+    elevation: '120 hm',
+    start: 'Fattoria La Vialla',
+    startCoordinates: [43.5281, 11.7794],
+    coordinates: [43.5281, 11.7794],
+    season: 'Ganzjahrig',
+    water: 'An der Fattoria',
+    dog: 'Gut geeignet, angeleint',
+    shade: 'Teilweise',
+    routeType: 'Rundtour',
+    category: 'lavialla',
+    description: 'Die kleine Runde fur Ankunftstag, Morgenlicht oder Verdauungsspaziergang durch die Huegel bei Meliciano.',
+    longDescription: `Diese Runde ist als entspannter Nahbereich um La Vialla gedacht: Hof, Olivenhaine, Feldwege und kleine Strassen rund um Meliciano. Perfekt, wenn du nicht ins Auto willst oder am Ankunftstag erst einmal die Landschaft lesen mochtest.
+
+Bitte vor Ort respektvoll bleiben: private Hof- und Wirtschaftswege nicht betreten, Tore so lassen wie du sie vorfindest und bei Dammmerung reflektierende Kleidung nutzen.`,
+    stops: [
+      { name: 'Fattoria La Vialla', description: 'Start am Hofbereich in Via di Meliciano 26.', coordinates: [43.5281, 11.7794], duration: '10 Min' },
+      { name: 'Olivenhaine oberhalb Meliciano', description: 'Kurzer Anstieg mit Blick uber die sanften Huegel.', coordinates: [43.5315, 11.7754], duration: '25 Min' },
+      { name: 'Feldweg-Ruckweg', description: 'Ruhiger Abschnitt zuruck Richtung Fattoria.', coordinates: [43.5246, 11.7834], duration: '30 Min' },
+      { name: 'Bottega / Hofplatz', description: 'Guter Abschluss, wenn geoffnet und reserviert.', coordinates: [43.5281, 11.7794], duration: '15 Min' },
+    ],
+    tips: [
+      'Ideal morgens oder kurz vor Sonnenuntergang.',
+      'Nicht alle Wege sind offentlich; vor Ort Schilder und Privatwege beachten.',
+      'Im Sommer reicht oft diese kurze Runde, bevor es heiss wird.',
+    ],
+    links: [
+      { label: 'La Vialla Kontakte', url: 'https://www.lavialla.com/en-GB/at-the-fattoria/contacts/' },
+      { label: 'Webcam La Vialla', url: 'https://www.lavialla.com/en-US/at-the-fattoria/webcam' },
+    ],
+  },
+  {
+    id: 'castiglion-fibocchi-vialla',
+    name: 'Castiglion Fibocchi ab La Vialla',
+    subtitle: 'Borgo, kurze Anfahrt und Huegelblick',
+    duration: '2-3 Std',
+    difficulty: 'Leicht-Mittel',
+    distance: '7 km',
+    elevation: '210 hm',
+    start: 'Fattoria La Vialla',
+    startCoordinates: [43.5281, 11.7794],
+    coordinates: [43.5277, 11.7607],
+    season: 'Ganzjahrig, im Sommer fruh',
+    water: 'La Vialla und im Ort',
+    dog: 'Angeleint moglich',
+    shade: 'Wenig bis mittel',
+    routeType: 'Hin/Ruck oder Rundvariante',
+    category: 'lavialla',
+    description: 'Eine nahe Runde Richtung Castiglion Fibocchi, gut fur einen halben Tag ohne grosse Planung.',
+    longDescription: `Castiglion Fibocchi liegt nah genug, um es als kurzen Wander- oder Spaziergangstag ab La Vialla zu denken. Die Tour verbindet den landlichen Nahbereich der Fattoria mit einem kleinen Borgo, Cafe-Pause und Blicken Richtung Pratomagno.
+
+Je nach gewahlter Wegfuhrung nutzt du kleine Strassen und Feldwege. Das ist keine markierte Nationalparkroute; nutze Karte, respektiere Privatwege und gehe bei Hitze fruh los.`,
+    stops: [
+      { name: 'Fattoria La Vialla', description: 'Startpunkt und Wasser auffullen.', coordinates: [43.5281, 11.7794], duration: '10 Min' },
+      { name: 'Meliciano', description: 'Kleiner Weiler und Orientierungspunkt.', coordinates: [43.5262, 11.7749], duration: '10 Min' },
+      { name: 'Castiglion Fibocchi', description: 'Kompakter Ort fur Kaffee, Eis oder kleine Pause.', coordinates: [43.5277, 11.7607], duration: '45 Min' },
+      { name: 'Rueckweg Richtung Fattoria', description: 'Bei Sonne lieber fruh oder am spaeten Nachmittag.', duration: '1 Std' },
+    ],
+    tips: [
+      'Fuer Kinder nur, wenn sie kleine Strassen sicher mitgehen.',
+      'In der Mittagshitze wenig Schatten.',
+      'Vor Ort mit Karten-App die oeffentlichen Wege pruefen.',
+    ],
+    links: [
+      { label: 'Navigation La Vialla', url: 'https://www.google.com/maps/search/?api=1&query=43.5281,11.7794' },
+      { label: 'Castiglion Fibocchi', url: 'https://www.comune.castiglionfibocchi.ar.it/' },
+    ],
+  },
+  {
+    id: 'ponte-buriano-penna',
+    name: 'Ponte Buriano & Penna',
+    subtitle: 'Arno-Naturreservat nahe Arezzo',
+    duration: '2-4 Std',
+    difficulty: 'Leicht',
+    distance: '6-9 km',
+    elevation: '80 hm',
+    start: 'Ponte Buriano',
+    startCoordinates: [43.4929, 11.7915],
+    coordinates: [43.4929, 11.7915],
+    season: 'Ganzjahrig, besonders Fruhling/Herbst',
+    water: 'Vorher mitnehmen',
+    dog: 'Gut geeignet, angeleint',
+    shade: 'Teilweise',
+    routeType: 'Spazier- und Rundwege',
+    category: 'lavialla',
+    description: 'Kurzer Ausflug von La Vialla zum Arno: flacher, leichter und gut als Schlechtwetter-Plan B.',
+    longDescription: `Ponte Buriano und das Naturschutzgebiet Ponte a Buriano e Penna sind ein gutes Gegengewicht zu den Bergtouren: flacher, wassernahe, mit Vogelwelt und der bekannten romanischen Bruecke am Arno.
+
+Von La Vialla fahrt man kurz mit dem Auto zum Start. Vor Ort kannst du je nach Wetter eine kleine Uferstrecke oder eine laengere Runde waehlen.`,
+    stops: [
+      { name: 'Ponte Buriano', description: 'Start an der historischen Bruecke.', coordinates: [43.4929, 11.7915], duration: '20 Min' },
+      { name: 'Arno-Ufer', description: 'Leichter Abschnitt am Wasser und im Gruen.', coordinates: [43.4965, 11.7865], duration: '1 Std' },
+      { name: 'Penna-Bereich', description: 'Ruhigere Wege und Naturbeobachtung.', coordinates: [43.5013, 11.7756], duration: '45 Min' },
+      { name: 'Rueckkehr zur Bruecke', description: 'Gleiche Richtung zurueck oder kleine Rundvariante.', duration: '1 Std' },
+    ],
+    tips: [
+      'Fernglas lohnt sich fuer Vogelbeobachtung.',
+      'Nach Regen koennen Uferwege matschig sein.',
+      'Gute leichte Alternative, wenn die Casentino-Berge im Nebel liegen.',
+    ],
+    links: [
+      { label: 'Navigation Ponte Buriano', url: 'https://www.google.com/maps/search/?api=1&query=Ponte%20Buriano%20Arezzo' },
+      { label: 'Arezzo in Tour', url: 'https://www.arezzointour.it/' },
+    ],
+  },
+  {
     id: 'camaldoli-poggio-scali',
     name: 'Camaldoli - Poggio Scali',
     subtitle: 'Tiefe Buchenwalder und Gipfelblick',
@@ -227,6 +338,7 @@ Von vielen Casentino-Orten ist die Anfahrt langer, deshalb eher als ganzer Wande
 
 export const tourCategories = [
   { id: 'all', name: 'Alle', icon: 'MapPin' },
+  { id: 'lavialla', name: 'La Vialla', icon: 'Home' },
   { id: 'leicht', name: 'Leicht', icon: 'Footprints' },
   { id: 'wald', name: 'Wald', icon: 'TreePine' },
   { id: 'gipfel', name: 'Gipfel', icon: 'Mountain' },

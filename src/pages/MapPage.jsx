@@ -14,6 +14,7 @@ L.Icon.Default.mergeOptions({
 })
 
 const categoryColors = {
+  fattoria: '#9b4a2f',
   trailhead: '#245447',
   village: '#d47b35',
   nature: '#3f7d4a',
@@ -32,8 +33,8 @@ function createIcon(color, label = '') {
   })
 }
 
-const DEFAULT_CENTER = [43.794, 11.82]
-const DEFAULT_ZOOM = 10
+const DEFAULT_CENTER = [43.69, 11.81]
+const DEFAULT_ZOOM = 9
 
 export default function MapPage() {
   const [selectedCategories, setSelectedCategories] = useState(new Set(['all']))
