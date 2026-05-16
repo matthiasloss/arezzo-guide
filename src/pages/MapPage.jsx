@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { CircleMarker, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
-import { Filter, LocateFixed, Route as RouteIcon } from 'lucide-react'
+import { CircleMarker, MapContainer, Marker, Polyline, Popup, TileLayer, useMap } from 'react-leaflet'
+import { Filter, Grape, LocateFixed, Route as RouteIcon } from 'lucide-react'
 import L from 'leaflet'
 import { categories, places } from '../data/places'
 import { tours } from '../data/tours'
+import { getRouteCoordinates } from '../utils/routes'
 
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
@@ -40,13 +41,21 @@ export default function MapPage() {
   const [selectedCategories, setSelectedCategories] = useState(new Set(['all']))
   const [showTours, setShowTours] = useState(true)
   const [showFilter, setShowFilter] = useState(false)
+  const [laViallaMode, setLaViallaMode] = useState(false)
   const [userLocation, setUserLocation] = useState(null)
   const [locationStatus, setLocationStatus] = useState('')
 
   const filteredPlaces = useMemo(() => {
-    if (selectedCategories.has('all')) return places.filter((place) => place.coordinates)
-    return places.filter((place) => place.coordinates && selectedCategories.has(place.category))
-  }, [selectedCategories])
+    const basePlaces = laViallaMode
+      ? places.filter((place) => ['fattoria', 'village', 'nature'].includes(place.category) && place.coordinates && place.coordinates[0] < 43.55)
+      : places.filter((place) => place.coordinates)
+    if (selectedCategories.has('all')) return basePlaces
+    return basePlaces.filter((place) => selectedCategories.has(place.category))
+  }, [laViallaMode, selectedCategories])
+
+  const visibleTours = useMemo(() => (
+    laViallaMode ? tours.filter((tour) => tour.category === 'lavialla') : tours
+  ), [laViallaMode])
 
   const toggleCategory = (catId) => {
     setSelectedCategories((prev) => {
@@ -122,6 +131,7 @@ export default function MapPage() {
       <div className="relative flex-1">
         <MapContainer center={DEFAULT_CENTER} zoom={DEFAULT_ZOOM} className="h-full w-full" zoomControl={false}>
           <RecenterOnLocation location={userLocation} />
+          <RecenterLaVialla active={laViallaMode} />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -141,7 +151,18 @@ export default function MapPage() {
             </Marker>
           ))}
 
-          {showTours && tours.map((tour) => (
+          {showTours && visibleTours.map((tour) => {
+            const routeCoordinates = getRouteCoordinates(tour)
+            return (
+              <Polyline
+                key={`${tour.id}-line`}
+                positions={routeCoordinates}
+                pathOptions={{ color: tour.category === 'lavialla' ? '#9b4a2f' : '#245447', weight: 4, opacity: 0.65 }}
+              />
+            )
+          })}
+
+          {showTours && visibleTours.map((tour) => (
             <Marker key={tour.id} position={tour.startCoordinates} icon={createIcon(categoryColors.tour, 'T')}>
               <Popup>
                 <div className="min-w-[220px]">
@@ -175,6 +196,13 @@ export default function MapPage() {
 
         <div className="absolute right-4 top-16 z-[1000] flex flex-col items-end gap-2">
           <button
+            onClick={() => setLaViallaMode((value) => !value)}
+            className={`flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-bold shadow-lg ${laViallaMode ? 'bg-[#9b4a2f] text-white' : 'bg-white text-[#20312a]'}`}
+          >
+            <Grape size={18} />
+            La Vialla
+          </button>
+          <button
             onClick={locateUser}
             className="flex items-center gap-2 rounded-lg bg-[#1d4ed8] px-4 py-3 text-sm font-bold text-white shadow-lg"
           >
@@ -196,11 +224,23 @@ export default function MapPage() {
 
         <div className="absolute right-4 top-4 z-[1000] rounded-lg bg-white px-3 py-2 text-sm font-bold shadow-lg">
           <span className="inline-flex items-center gap-2"><LocateFixed size={15} /> {filteredPlaces.length} Orte</span>
-          {showTours && <span className="ml-3 inline-flex items-center gap-1"><RouteIcon size={15} /> {tours.length}</span>}
+          {showTours && <span className="ml-3 inline-flex items-center gap-1"><RouteIcon size={15} /> {visibleTours.length}</span>}
         </div>
       </div>
     </div>
   )
+}
+
+function RecenterLaVialla({ active }) {
+  const map = useMap()
+
+  useEffect(() => {
+    if (active) {
+      map.setView([43.5281, 11.7794], 13, { animate: true })
+    }
+  }, [active, map])
+
+  return null
 }
 
 function RecenterOnLocation({ location }) {

@@ -1,10 +1,10 @@
 import { Outlet, NavLink } from 'react-router-dom'
-import { Home, Map, MapPin, Route as RouteIcon, Info } from 'lucide-react'
+import { Home, Map, Route as RouteIcon, Info, Grape } from 'lucide-react'
 
 const navItems = [
   { to: '/', icon: Home, label: 'Home' },
   { to: '/karte', icon: Map, label: 'Karte' },
-  { to: '/orte', icon: MapPin, label: 'Orte' },
+  { to: '/offline', icon: Grape, label: 'La Vialla' },
   { to: '/touren', icon: RouteIcon, label: 'Touren' },
   { to: '/info', icon: Info, label: 'Info' },
 ]

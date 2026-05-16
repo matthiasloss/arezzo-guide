@@ -8,6 +8,7 @@ import PlaceDetail from './pages/PlaceDetail'
 import Tours from './pages/Tours'
 import TourDetail from './pages/TourDetail'
 import Info from './pages/Info'
+import OfflinePack from './pages/OfflinePack'
 
 function App() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
         <Route path="orte/:id" element={<PlaceDetail />} />
         <Route path="touren" element={<Tours />} />
         <Route path="touren/:id" element={<TourDetail />} />
+        <Route path="offline" element={<OfflinePack />} />
         <Route path="info" element={<Info />} />
       </Route>
     </Routes>

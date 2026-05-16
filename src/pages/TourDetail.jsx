@@ -1,6 +1,8 @@
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, CheckCircle, Clock, Compass, Droplets, ExternalLink, Footprints, MapPin, Mountain, Navigation, PawPrint, ShieldAlert, SunMedium, TreePine } from 'lucide-react'
+import { ArrowLeft, CheckCircle, Clock, Compass, Download, Droplets, ExternalLink, Footprints, MapPin, Mountain, Navigation, PawPrint, ShieldAlert, SunMedium, TreePine } from 'lucide-react'
+import WeatherHikingCard from '../components/WeatherHikingCard'
 import { tours } from '../data/tours'
+import { downloadGpx } from '../utils/routes'
 
 export default function TourDetail() {
   const { id } = useParams()
@@ -49,6 +51,8 @@ export default function TourDetail() {
           <InfoTile icon={PawPrint} title="Hund" text={tour.dog} />
           <InfoTile icon={TreePine} title="Schatten" text={tour.shade} />
         </section>
+
+        <WeatherHikingCard tour={tour} />
 
         <section className="mt-5">
           <h2 className="mb-3 text-lg font-bold">Stationen</h2>
@@ -108,6 +112,14 @@ export default function TourDetail() {
             </div>
           </section>
         )}
+
+        <button
+          onClick={() => downloadGpx(tour)}
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-white px-4 py-4 font-bold text-[#245447] shadow-sm"
+        >
+          <Download size={20} />
+          GPX-Route herunterladen
+        </button>
 
         {startCoords && (
           <button
